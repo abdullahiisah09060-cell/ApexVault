@@ -1,1 +1,53 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | ApexVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#020617] text-white min-h-screen">
+
+    <!-- Top Nav -->
+    <nav class="p-6 flex justify-between items-center border-b border-slate-800">
+        <h1 class="font-black text-amber-500">APEXVAULT</h1>
+        <button id="logoutBtn" class="text-xs text-slate-400">Logout</button>
+    </nav>
+
+    <main class="p-6 max-w-2xl mx-auto">
+        <!-- Balance Card -->
+        <div class="bg-gradient-to-br from-amber-500 to-orange-600 p-8 rounded-3xl text-black mb-8">
+            <p class="font-bold opacity-80">Total Balance</p>
+            <h2 id="balance" class="text-4xl font-black mt-2">₦0.00</h2>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-2 gap-4">
+            <a href="deposit.html" class="bg-slate-900 p-4 rounded-2xl text-center border border-slate-800">Deposit</a>
+            <a href="invest.html" class="bg-slate-900 p-4 rounded-2xl text-center border border-slate-800">Invest</a>
+        </div>
+    </main>
+
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists()) {
+                    document.getElementById('balance').innerText = `₦${docSnap.data().balance.toLocaleString()}`;
+                }
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => window.location.href = "index.html");
+        });
+    </script>
+</body>
+</html>
