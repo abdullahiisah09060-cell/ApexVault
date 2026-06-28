@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexVault Investment - Earn 8% Daily Returns</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .heading { font-family: 'Playfair Display', sans-serif; }
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://picsum.photos/id/1015/2000/1200') center/cover fixed;
+    }
+    .card-hover:hover { transform: translateY(-15px); }
+  </style>
+</head>
+<body class="bg-gray-950 text-white">
+
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 bg-black/95 backdrop-blur-md border-b border-emerald-900">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-2xl flex items-center justify-center text-3xl shadow-xl">💎</div>
+        <div>
+          <span class="heading text-3xl font-bold tracking-tighter">ApexVault</span>
+          <p class="text-xs text-emerald-400 -mt-1">INVESTMENT LIMITED</p>
+        </div>
+      </div>
+      <div class="hidden md:flex gap-8 font-medium">
+        <a href="#how" class="hover:text-emerald-400">How It Works</a>
+        <a href="#packages" class="hover:text-emerald-400">Packages</a>
+        <a href="#testimonials" class="hover:text-emerald-400">Stories</a>
+        <a href="#faq" class="hover:text-emerald-400">FAQ</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="login.html" class="px-6 py-3 rounded-2xl hover:bg-white/10">Login</a>
+        <a href="register.html" class="bg-emerald-600 hover:bg-emerald-500 px-8 py-3 rounded-2xl font-semibold">Join Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-bg min-h-screen flex items-center pt-20">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h1 class="heading text-6xl md:text-7xl font-bold leading-none mb-6">Your Path to Daily Financial Freedom</h1>
+      <p class="text-2xl text-gray-300 max-w-3xl mx-auto">Earn up to 8% daily on your investment. Trusted by thousands of Nigerians.</p>
+      <div class="mt-10 flex justify-center gap-6">
+        <a href="register.html" class="bg-white text-black px-12 py-6 rounded-3xl text-xl font-semibold">Start Investing Today</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="py-16 bg-black">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div><div class="text-5xl font-bold text-emerald-400">8%</div><div>Daily Returns</div></div>
+      <div><div class="text-5xl font-bold">₦4.8B+</div><div>Total Payouts</div></div>
+      <div><div class="text-5xl font-bold">19k+</div><div>Active Members</div></div>
+      <div><div class="text-5xl font-bold">24/7</div><div>Support</div></div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how" class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-16">How ApexVault Works</h2>
+      <!-- Add 3-4 detailed step cards here -->
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section id="packages" class="py-24 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-16">Investment Packages</h2>
+      <!-- Add 4 package cards with different amounts and 8% daily claims -->
+    </div>
+  </section>
+
+  <!-- Rotating Testimonials -->
+  <section id="testimonials" class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-16">Success Stories</h2>
+      <div id="testimonials-container" class="grid md:grid-cols-3 gap-8">
+        <!-- JS will populate random ones -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 bg-gray-900">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <div class="space-y-6">
+        <!-- Add 6-8 FAQ items -->
+        **Summary:**
+How does the daily return work?
+          <p class="mt-4 text-gray-400">Your investment earns up to 8% every 24 hours...</p>
+        <!-- More FAQs -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black py-20">
+    <div class="max-w-7xl mx-auto px-6 text-center text-gray-500">
+      © 2026 ApexVault Investment. For Educational Demonstration Only.
+    </div>
+  </footer>
+
+  <script>
+    // Rotating Testimonials
+    const testimonialsData = [
+      {name: "Chinedu Okoro", text: "Started with 100k, now earning seriously every day. God bless ApexVault!", location: "Lagos"},
+      {name: "Aisha Bello", text: "Withdrew my first 200k profit last week. The platform is legit!", location: "Abuja"},
+      // Add more objects
+    ];
+
+    // Function to render random testimonials
+    function renderTestimonials() {
+      // Implementation
+    }
+    renderTestimonials();
+    setInterval(renderTestimonials, 7000);
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</body>
+</html>
