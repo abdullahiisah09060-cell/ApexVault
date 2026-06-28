@@ -3,87 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApexVault | Premium Digital Investment Platform</title>
+    <title>ApexVault | Secure Wealth Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gold-gradient { background: linear-gradient(90deg, #fbbf24 0%, #d97706 100%); }
+    </style>
 </head>
-<body class="bg-gray-950 text-white font-sans scroll-smooth">
+<body class="bg-slate-950 text-white font-sans antialiased">
 
-    <!-- Header -->
-    <nav class="flex justify-between items-center py-6 px-10 border-b border-gray-800 bg-gray-900/50 backdrop-blur-md sticky top-0 z-50">
-        <h1 class="text-3xl font-bold text-emerald-500 tracking-tighter">APEXVAULT</h1>
-        <div class="space-x-8 text-sm font-medium">
-            <a href="#features" class="hover:text-emerald-400">Features</a>
-            <a href="#invest" class="hover:text-emerald-400">Plans</a>
-            <a href="#faq" class="hover:text-emerald-400">FAQ</a>
-            <a href="login.html" class="text-emerald-400">Login</a>
-            <a href="register.html" class="bg-emerald-600 px-6 py-2 rounded-full hover:bg-emerald-500 transition">Get Started</a>
+    <!-- Nav -->
+    <nav class="flex justify-between items-center py-6 px-10 border-b border-slate-800">
+        <h1 class="text-2xl font-black italic tracking-widest text-amber-400">APEXVAULT</h1>
+        <div class="hidden md:flex space-x-6 text-sm font-semibold">
+            <a href="#" class="hover:text-amber-400">Home</a>
+            <a href="#plans" class="hover:text-amber-400">Investment Plans</a>
+            <a href="login.html" class="border border-slate-700 px-5 py-2 rounded-lg hover:bg-slate-800">Login</a>
+            <a href="register.html" class="gold-gradient text-slate-950 px-5 py-2 rounded-lg font-bold">Join Now</a>
         </div>
     </nav>
 
     <!-- Hero -->
-    <header class="py-24 text-center px-6">
-        <div class="inline-block bg-emerald-900/30 text-emerald-400 px-4 py-1 rounded-full text-sm mb-6 border border-emerald-800">New: ₦200,000 Welcome Bonus Active</div>
-        <h2 class="text-6xl font-extrabold mb-6 leading-tight">Grow Your Wealth with <br><span class="text-emerald-500">ApexVault Intelligence</span></h2>
-        <p class="text-gray-400 text-xl mb-10 max-w-2xl mx-auto">The most secure way for Nigerians to trade, invest, and grow their capital with real-time analytics and professional support.</p>
-        <div class="flex justify-center gap-4">
-            <a href="register.html" class="px-10 py-4 bg-emerald-600 text-lg font-bold rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/20">Start Investing Now</a>
-        </div>
+    <header class="py-20 px-6 text-center">
+        <div class="text-amber-400 font-bold mb-4 tracking-tighter uppercase text-sm">Regulated Digital Assets</div>
+        <h2 class="text-6xl md:text-7xl font-extrabold mb-6 leading-tight">Your Journey To <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600">Financial Freedom</span></h2>
+        <p class="text-slate-400 text-lg mb-8 max-w-xl mx-auto">Get ₦200,000 welcome bonus upon registration. Start investing in low-risk, high-reward digital assets today.</p>
+        <a href="register.html" class="gold-gradient text-slate-950 px-10 py-4 rounded-full font-bold text-lg shadow-lg shadow-amber-900/20">Claim Bonus & Start</a>
     </header>
 
-    <!-- Investment Packages -->
-    <section id="invest" class="py-20 bg-gray-900">
-        <div class="max-w-6xl mx-auto px-6">
-            <h3 class="text-4xl font-bold text-center mb-16">Choose Your Plan</h3>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 bg-gray-950 border border-gray-800 rounded-2xl hover:border-emerald-500 transition">
-                    <h4 class="text-2xl font-bold mb-2">Starter</h4>
-                    <p class="text-4xl font-bold text-emerald-500 mb-6">15% <span class="text-sm font-normal text-gray-500">ROI</span></p>
-                    <ul class="text-gray-400 space-y-3 mb-8"><li><i class="fa fa-check text-emerald-500"></i> Minimum ₦5,000</li><li><i class="fa fa-check text-emerald-500"></i> Daily Withdrawals</li></ul>
-                    <a href="register.html" class="block w-full py-3 border border-emerald-600 text-center rounded-lg hover:bg-emerald-600">Select</a>
-                </div>
-                <!-- Add more cards as needed -->
-            </div>
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto px-6 mb-20">
+        <div class="text-center p-6 border border-slate-800 rounded-2xl bg-slate-900">
+            <div class="text-3xl font-bold text-amber-400">50k+</div>
+            <div class="text-slate-500 text-xs mt-1 uppercase tracking-wider">Active Users</div>
         </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-20 px-6">
-        <h3 class="text-4xl font-bold text-center mb-16">Trusted by 50,000+ Nigerians</h3>
-        <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <div class="p-6 bg-gray-900 rounded-xl border border-gray-800">
-                <p class="text-gray-400 italic mb-4">"I started with the starter pack and in 3 months I have doubled my investment. ApexVault is real!"</p>
-                <h5 class="font-bold">- Femi, Lagos</h5>
-            </div>
-            <div class="p-6 bg-gray-900 rounded-xl border border-gray-800">
-                <p class="text-gray-400 italic mb-4">"Withdrawals are instant. I love the interface and how easy it is to use."</p>
-                <h5 class="font-bold">- Amaka, Abuja</h5>
-            </div>
-            <div class="p-6 bg-gray-900 rounded-xl border border-gray-800">
-                <p class="text-gray-400 italic mb-4">"The ₦200k welcome bonus gave me the push I needed to start trading. Highly recommend."</p>
-                <h5 class="font-bold">- Ibrahim, Kano</h5>
-            </div>
+        <div class="text-center p-6 border border-slate-800 rounded-2xl bg-slate-900">
+            <div class="text-3xl font-bold text-amber-400">₦2B+</div>
+            <div class="text-slate-500 text-xs mt-1 uppercase tracking-wider">Total Payouts</div>
         </div>
-    </section>
+        <div class="text-center p-6 border border-slate-800 rounded-2xl bg-slate-900">
+            <div class="text-3xl font-bold text-amber-400">24/7</div>
+            <div class="text-slate-500 text-xs mt-1 uppercase tracking-wider">Instant Support</div>
+        </div>
+        <div class="text-center p-6 border border-slate-800 rounded-2xl bg-slate-900">
+            <div class="text-3xl font-bold text-amber-400">99%</div>
+            <div class="text-slate-500 text-xs mt-1 uppercase tracking-wider">Success Rate</div>
+        </div>
+    </div>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="py-20 bg-gray-900">
+    <!-- FAQ -->
+    <section class="py-20 bg-slate-900/50">
         <div class="max-w-3xl mx-auto px-6">
-            <h3 class="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h3>
-            <div class="space-y-6">
-                <details class="bg-gray-950 p-6 rounded-lg cursor-pointer">
-                    <summary class="font-bold">Is ApexVault safe?</summary>
-                    <p class="mt-4 text-gray-400">Yes, we use military-grade encryption and secure partnerships to ensure your funds are protected 24/7.</p>
+            <h3 class="text-3xl font-bold mb-10 text-center">Frequently Asked Questions</h3>
+            <div class="space-y-4">
+                <details class="p-6 bg-slate-950 rounded-xl border border-slate-800">
+                    <summary class="font-bold cursor-pointer hover:text-amber-400">How do I earn with ApexVault?</summary>
+                    <p class="mt-4 text-slate-400">You simply select an investment package, fund your wallet, and watch your daily ROI grow automatically.</p>
                 </details>
-                <details class="bg-gray-950 p-6 rounded-lg cursor-pointer">
-                    <summary class="font-bold">How do I withdraw?</summary>
-                    <p class="mt-4 text-gray-400">Withdrawals are processed instantly once you input your unique verification code purchased from the platform.</p>
+                <details class="p-6 bg-slate-950 rounded-xl border border-slate-800">
+                    <summary class="font-bold cursor-pointer hover:text-amber-400">Is the ₦200,000 bonus withdrawable?</summary>
+                    <p class="mt-4 text-slate-400">The bonus serves as your starting capital to trade. Profits generated from the bonus are fully withdrawable after meeting the trade cycle.</p>
                 </details>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center text-gray-500 border-t border-gray-800">
+    <!-- Footer -->
+    <footer class="py-10 text-center border-t border-slate-800 text-slate-600 text-sm">
         &copy; 2026 ApexVault Investment. All rights reserved.
     </footer>
 </body>
