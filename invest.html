@@ -1,1 +1,35 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invest | ApexVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#020617] text-white p-6">
+    <div class="max-w-md mx-auto">
+        <h2 class="text-2xl font-bold mb-6">Investment Packages</h2>
+        <div class="space-y-4">
+            <!-- Package 1 -->
+            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800">
+                <h3 class="font-bold text-amber-500">Starter Plan</h3>
+                <p class="text-sm text-slate-400 mb-4">Min: ₦5,000 | 15% Daily ROI</p>
+                <button onclick="invest(5000)" class="w-full py-2 bg-slate-800 rounded-lg font-bold">Invest ₦5k</button>
+            </div>
+            <!-- Package 2 -->
+            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800">
+                <h3 class="font-bold text-amber-500">Silver Plan</h3>
+                <p class="text-sm text-slate-400 mb-4">Min: ₦20,000 | 25% Daily ROI</p>
+                <button onclick="invest(20000)" class="w-full py-2 bg-slate-800 rounded-lg font-bold">Invest ₦20k</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function invest(amount) {
+            alert(`Investment of ₦${amount} initiated!`);
+            // Firebase update logic will go here
+        }
+    </script>
+</body>
+</html>
