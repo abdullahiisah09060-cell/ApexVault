@@ -1,32 +1,9 @@
-// firebase-config.js - Core Engine & Helpers
+// firebase-config.js - The Core Engine
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { 
-    getAuth, 
-    onAuthStateChanged, 
-    GoogleAuthProvider, 
-    signInWithPopup, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signOut, 
-    sendEmailVerification, 
-    sendPasswordResetEmail 
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { 
-    getFirestore, 
-    doc, 
-    getDoc, 
-    setDoc, 
-    updateDoc, 
-    collection, 
-    addDoc, 
-    query, 
-    where, 
-    orderBy, 
-    onSnapshot, 
-    serverTimestamp, 
-    increment,
-    limit,
-    getDocs
+    getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc, 
+    query, where, orderBy, onSnapshot, serverTimestamp, increment, limit, getDocs 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -44,57 +21,50 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-// --- UTILITIES ---
+// --- UI UTILITIES ---
 
-// Toast System
+// Toast Notification System (Pure CSS/JS)
 const toast = (message, type = 'success') => {
-    const container = document.getElementById('toast-container') || createToastContainer();
+    let container = document.getElementById('toast-box');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-box';
+        document.body.appendChild(container);
+    }
     const t = document.createElement('div');
-    t.className = `toast ${type}`;
+    t.className = `toast-msg ${type}`;
     t.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-triangle-exclamation'}"></i>
         <span>${message}</span>
     `;
     container.appendChild(t);
     setTimeout(() => {
-        t.style.opacity = '0';
+        t.classList.add('hide');
         setTimeout(() => t.remove(), 500);
     }, 4000);
 };
 
-function createToastContainer() {
-    const div = document.createElement('div');
-    div.id = 'toast-container';
-    document.body.appendChild(div);
-    return div;
-}
-
-// Formatting
+// Formatting Functions
 const formatNaira = (amount) => {
     return new Intl.NumberFormat('en-NG', {
         style: 'currency',
         currency: 'NGN',
-        minimumFractionDigits: 2
+        minimumFractionDigits: 0
     }).format(amount);
 };
 
-const timeAgo = (timestamp) => {
-    if (!timestamp) return 'Just now';
-    const seconds = Math.floor((new Date() - timestamp.toDate()) / 1000);
-    let interval = seconds / 31536000;
-    if (interval > 1) return Math.floor(interval) + " years ago";
-    interval = seconds / 2592000;
-    if (interval > 1) return Math.floor(interval) + " months ago";
-    interval = seconds / 86400;
-    if (interval > 1) return Math.floor(interval) + " days ago";
-    interval = seconds / 3600;
-    if (interval > 1) return Math.floor(interval) + " hours ago";
-    interval = seconds / 60;
-    if (interval > 1) return Math.floor(interval) + " minutes ago";
-    return Math.floor(seconds) + " seconds ago";
+const timeAgo = (date) => {
+    if (!date) return '...';
+    const seconds = Math.floor((new Date() - date.toDate()) / 1000);
+    if (seconds < 60) return 'Just now';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    return date.toDate().toLocaleDateString();
 };
 
-// --- DATA HELPERS ---
+// --- DATABASE HELPERS ---
 
 const logTransaction = async (uid, type, amount, description, status = 'completed', meta = {}) => {
     await addDoc(collection(db, "transactions"), {
@@ -110,31 +80,18 @@ const notifyUser = async (uid, title, message, type = 'info') => {
     });
 };
 
-const updateBalance = async (uid, amount) => {
-    const userRef = doc(db, "users", uid);
-    await updateDoc(userRef, {
-        balance: increment(amount)
-    });
+const updateLeaderboard = async (uid, displayName, totalInvested) => {
+    await setDoc(doc(db, "leaderboard", uid), {
+        uid, displayName, totalInvested, updatedAt: serverTimestamp()
+    }, { merge: true });
 };
 
-// Paystack Helper
+// --- PAYSTACK INTEGRATION ---
+
 const payWithPaystack = ({ email, amount, onSuccess }) => {
     const handler = PaystackPop.setup({
         key: 'pk_test_914662bcd8cdc4c28bfbdeb8f48653dbf00c595a',
         email,
-        amount: Math.round(amount * 100),
+        amount: Math.round(amount * 100), // convert to kobo
         currency: 'NGN',
-        ref: 'BP_' + Date.now() + '_' + Math.random().toString(36).substr(2,9),
-        callback: (response) => onSuccess(response),
-        onClose: () => toast('Transaction cancelled by user', 'warning')
-    });
-    handler.openIframe();
-};
-
-export { 
-    auth, db, googleProvider, signInWithPopup, createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail,
-    doc, getDoc, setDoc, updateDoc, collection, addDoc, query, where, orderBy, 
-    onSnapshot, serverTimestamp, increment, limit, getDocs,
-    toast, formatNaira, timeAgo, logTransaction, notifyUser, updateBalance, payWithPaystack 
-};
+        ref: 'BP_' + Math.floor((Math.random() * 100000000
