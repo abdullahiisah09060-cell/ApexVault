@@ -1,30 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login to ApexVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Login | BluePay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --bg: #06080f; --bg2: #0b0f1a; --blue: #1d4ed8; --blue2: #3b82f6; --text: #f8fafc; --muted: #64748b; --border: rgba(255,255,255,0.08); }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; }
+        .auth-container { padding: 60px 6%; max-width: 450px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; }
+        .logo-box { text-align: center; margin-bottom: 40px; }
+        h2 { font-size: 28px; font-weight: 800; margin: 0; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+        input { width: 100%; background: var(--bg2); border: 1px solid var(--border); padding: 14px 16px 14px 45px; border-radius: 12px; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; }
+        .btn-submit { background: linear-gradient(135deg, var(--blue), var(--blue2)); color: #fff; width: 100%; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; margin-top: 10px; box-shadow: 0 10px 20px rgba(29, 78, 216, 0.3); border: none; }
+        .google-btn { background: #fff; color: #000; width: 100%; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; cursor: pointer; }
+        .links { display: flex; justify-content: space-between; margin-top: 15px; font-size: 13px; }
+        .links a { color: var(--blue2); font-weight: 600; }
+        .footer-text { text-align: center; margin-top: 40px; font-size: 14px; color: var(--muted); }
+    </style>
 </head>
-<body class="bg-[#020617] flex items-center justify-center min-h-screen p-6">
-    <div class="w-full max-w-md bg-slate-900 p-8 rounded-3xl border border-slate-800">
-        <h2 class="text-3xl font-black text-white mb-8">Welcome Back</h2>
-        <form id="loginForm" class="space-y-4">
-            <input type="email" id="email" placeholder="Email Address" class="w-full p-4 bg-slate-950 rounded-xl border border-slate-700 text-white" required>
-            <input type="password" id="pass" placeholder="Password" class="w-full p-4 bg-slate-950 rounded-xl border border-slate-700 text-white" required>
-            <button type="submit" class="w-full py-4 bg-amber-500 text-black font-bold rounded-xl">Sign In</button>
-        </form>
+<body>
+
+<div class="auth-container">
+    <div class="logo-box">
+        <h2>Welcome Back</h2>
+        <p style="color: var(--muted); margin-top: 8px;">Log in to manage your investments.</p>
     </div>
 
-    <script type="module">
-        import { loginUser } from './auth.js';
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-            loginUser(email, pass);
-        });
-    </script>
+    <form id="loginForm">
+        <div class="form-group">
+            <label>Email Address</label>
+            <div class="input-wrapper">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" placeholder="name@example.com" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Login Account</button>
+    </form>
+
+    <div class="links">
+        <a href="forgot-password.html">Forgot Password?</a>
+    </div>
+
+    <button class="google-btn" id="googleBtn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_放歌_Icon.svg" width="18">
+        Login with Google
+    </button>
+
+    <p class="footer-text">New to BluePay? <a href="register.html" style="color: var(--blue2); font-weight: 700;">Create Account</a></p>
+</div>
+
+<script type="module">
+    import { loginUser, continueWithGoogle } from './auth.js';
+    import { toast } from './firebase-config.js';
+
+    document.getElementById('loginForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+        const res = await loginUser(
+            document.getElementById('email').value,
+            document.getElementById('password').value
+        );
+
+        if(res.success) {
+            if(res.verified) window.location.href = 'dashboard.html';
+            else window.location.href = 'verify.html';
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = 'Login Account';
+        }
+    };
+
+    document.getElementById('googleBtn').onclick = continueWithGoogle;
+</script>
 </body>
 </html>
