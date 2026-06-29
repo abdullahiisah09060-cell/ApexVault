@@ -3,174 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BluePay | Invest in Your Future</title>
+    <title>Join BluePay | Start Investing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root {
-            --bg: #06080f; --bg2: #0b0f1a; --blue: #1d4ed8; --blue2: #3b82f6; 
-            --gold: #d4af37; --text: #eef0f4; --muted: #8896aa;
-        }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
-        /* Navbar */
-        nav {
-            height: 80px; display: flex; align-items: center; justify-content: space-between;
-            padding: 0 5%; background: rgba(6, 8, 15, 0.8); backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .logo { font-size: 24px; font-weight: 800; color: white; display: flex; align-items: center; gap: 10px; }
+        :root { --bg: #06080f; --bg2: #0b0f1a; --blue: #1d4ed8; --blue2: #3b82f6; --text: #eef0f4; --muted: #8896aa; --red: #ef4444; --green: #22c55e; --border: rgba(255,255,255,0.07); }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .auth-card { background: var(--bg2); padding: 40px; border-radius: 24px; width: 100%; max-width: 450px; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .logo { text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 30px; }
         .logo span { color: var(--blue); }
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; transition: 0.3s; }
-        .nav-links a:hover { color: white; }
-        .btn-start { background: linear-gradient(135deg, var(--blue), var(--blue2)); color: white !important; padding: 12px 28px; border-radius: 12px; font-weight: 600; }
-
-        /* Hero */
-        .hero { padding: 100px 5% 60px; text-align: center; max-width: 1000px; margin: 0 auto; }
-        .hero h1 { font-size: clamp(40px, 8vw, 72px); font-weight: 800; line-height: 1.1; margin-bottom: 24px; }
-        .hero h1 span { background: linear-gradient(to right, var(--blue2), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: var(--muted); font-size: 18px; margin-bottom: 40px; line-height: 1.6; }
+        h2 { margin-bottom: 10px; text-align: center; }
+        p.subtitle { text-align: center; color: var(--muted); margin-bottom: 30px; font-size: 14px; }
+        .input-group { margin-bottom: 20px; position: relative; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--muted); }
+        .input-group i { position: absolute; left: 15px; top: 38px; color: var(--muted); }
+        .input-group input { width: 100%; padding: 12px 15px 12px 45px; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; color: white; outline: none; transition: 0.3s; background: #0f1422; }
+        .input-group input:focus { border-color: var(--blue); }
+        .eye-toggle { position: absolute; right: 15px; top: 38px; cursor: pointer; color: var(--muted); }
         
-        .mockup { width: 90%; max-width: 800px; margin: 40px auto; border-radius: 20px; border: 4px solid var(--bg2); box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
+        .strength-meter { height: 4px; background: var(--border); margin-top: 8px; border-radius: 2px; overflow: hidden; }
+        .strength-bar { height: 100%; width: 0; transition: 0.3s; }
 
-        /* Stats */
-        .stats-strip { display: flex; justify-content: space-around; padding: 40px 5%; background: var(--bg2); border-top: 1px solid var(--border); }
-        .stat-item h3 { font-size: 32px; color: var(--gold); }
-        .stat-item p { color: var(--muted); font-size: 14px; }
-
-        /* Features Grid */
-        .section-title { text-align: center; padding: 80px 0 40px; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 5% 80px; }
-        .feature-card { background: var(--bg2); padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
-        .feature-card:hover { border-color: var(--blue); transform: translateY(-10px); }
-        .feature-card i { font-size: 32px; color: var(--blue); margin-bottom: 20px; }
-
-        /* Plans Preview */
-        .plans-preview { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 5% 80px; }
-        .plan-card { background: var(--bg3); padding: 30px; border-radius: 20px; width: 300px; border: 1px solid var(--gold); position: relative; }
-        .plan-card.hot::after { content: 'HOT'; position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 10px; padding: 4px 8px; border-radius: 4px; }
-
-        /* Testimonials */
-        #testimonial-container { text-align: center; padding: 80px 5%; min-height: 300px; }
-        .testimonial { max-width: 700px; margin: 0 auto; animation: fadeIn 0.8s; }
-        .avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--blue); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 40px; }
-        }
+        .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--blue), var(--blue2)); border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-google { width: 100%; padding: 12px; background: white; color: #000; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        .footer-links { text-align: center; margin-top: 25px; font-size: 14px; color: var(--muted); }
+        .footer-links a { color: var(--blue); text-decoration: none; font-weight: 600; }
+        
+        .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo"><i class="fas fa-shield-halved"></i> BLUE<span>PAY</span></div>
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="investment-plans.html">Plans</a>
-            <a href="login.html">Login</a>
-            <a href="register.html" class="btn-start">Get Started</a>
-        </div>
-        <i class="fas fa-bars" style="font-size: 24px; cursor: pointer; display: none;" id="menu-btn"></i>
-    </nav>
+    <div class="auth-card">
+        <div class="logo">BLUE<span>PAY</span></div>
+        <h2>Create Account</h2>
+        <p class="subtitle">Start your journey to financial freedom today.</p>
 
-    <section class="hero">
-        <h1>Invest in the future of <span>Fintech & Crypto</span></h1>
-        <p>BluePay is Nigeria's most secure investment platform. Start with as little as ₦1,000 and earn up to 120% ROI with daily withdrawals and 24/7 support.</p>
-        <div style="display: flex; gap: 15px; justify-content: center;">
-            <a href="register.html" class="btn-start" style="text-decoration: none;">Create Free Account</a>
-            <a href="investment-plans.html" style="color: white; text-decoration: none; padding: 12px 28px; border: 1px solid var(--muted); border-radius: 12px;">View All Plans</a>
-        </div>
-        <img src="https://img.freepik.com/free-vector/gradient-ui-ux-elements-background_23-2149056159.jpg" class="mockup" alt="Dashboard Mockup">
-    </section>
-
-    <div class="stats-strip">
-        <div class="stat-item"><h3>50k+</h3><p>Active Users</p></div>
-        <div class="stat-item"><h3>₦2B+</h3><p>Paid Out</p></div>
-        <div class="stat-item"><h3>99.9%</h3><p>Uptime</p></div>
-        <div class="stat-item"><h3>24/7</h3><p>Live Support</p></div>
-    </div>
-
-    <section id="features" class="section-title">
-        <h2>Why Choose BluePay?</h2>
-        <p style="color: var(--muted);">Engineered for transparency, built for wealth.</p>
-    </section>
-
-    <div class="features">
-        <div class="feature-card">
-            <i class="fas fa-bolt"></i>
-            <h3>Instant Credits</h3>
-            <p>Your deposits are credited instantly via Paystack. No manual waiting, no delays.</p>
-        </div>
-        <div class="feature-card">
-            <i class="fas fa-lock"></i>
-            <h3>Military-Grade Security</h3>
-            <p>We use SSL encryption and 2FA to ensure your funds and data are always safe.</p>
-        </div>
-        <div class="feature-card">
-            <i class="fas fa-coins"></i>
-            <h3>Daily ROI Claims</h3>
-            <p>Don't wait until the end of your plan. Claim your earned profits every single day.</p>
-        </div>
-    </div>
-
-    <div id="testimonial-container">
-        <!-- JS will populate -->
-    </div>
-
-    <footer style="background: var(--bg2); padding: 60px 5% 20px; border-top: 1px solid var(--border);">
-        <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; margin-bottom: 40px;">
-            <div style="max-width: 300px;">
-                <div class="logo" style="margin-bottom: 20px;">BLUE<span>PAY</span></div>
-                <p style="color: var(--muted); font-size: 14px;">The smarter way to grow your wealth in the digital age.</p>
+        <form id="register-form">
+            <div class="input-group">
+                <label>Full Name</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="reg-name" placeholder="John Doe" required>
             </div>
-            <div>
-                <h4>Company</h4>
-                <a href="terms.html" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Terms</a>
-                <a href="privacy.html" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Privacy</a>
+            <div class="input-group">
+                <label>Email Address</label>
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="reg-email" placeholder="name@example.com" required>
             </div>
-            <div>
-                <h4>Support</h4>
-                <a href="support.html" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Live Chat</a>
-                <a href="mailto:admin@bluepay.com" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Email Us</a>
+            <div class="input-group">
+                <label>Phone Number</label>
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="reg-phone" placeholder="08012345678" required>
             </div>
+            <div class="input-group">
+                <label>Password</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" id="reg-password" placeholder="••••••••" required>
+                <i class="fas fa-eye eye-toggle" onclick="togglePass('reg-password')"></i>
+                <div class="strength-meter"><div id="strength-bar" class="strength-bar"></div></div>
+            </div>
+            <div class="input-group">
+                <label>Referral Code (Optional)</label>
+                <i class="fas fa-users"></i>
+                <input type="text" id="reg-ref" placeholder="BLUE1234">
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" required>
+                <span>I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a></span>
+            </div>
+
+            <button type="submit" class="btn-primary" id="reg-btn">Create Account</button>
+        </form>
+
+        <button class="btn-google" id="google-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_放歌_Icon.svg" width="18">
+            Continue with Google
+        </button>
+
+        <div class="footer-links">
+            Already have an account? <a href="login.html">Login</a>
         </div>
-        <p style="text-align: center; color: var(--muted); font-size: 12px;">© 2024 BluePay Investment Platform. All rights reserved.</p>
-    </footer>
+    </div>
 
     <script type="module">
-        const testimonials = [
-            { name: "Ahmed K.", text: "BluePay changed my perspective on online investments. ₦200k bonus is real!", color: "#1d4ed8" },
-            { name: "Blessing E.", text: "The daily ROI claim feature is what I love most. Very transparent.", color: "#d4af37" },
-            { name: "Chidi O.", text: "Fast withdrawals and great support. Highly recommended.", color: "#22c55e" },
-            { name: "Sarah M.", text: "I've tried many platforms, but BluePay is the most stable so far.", color: "#ef4444" },
-            { name: "David A.", text: "The user interface is so smooth. Even my mom can use it!", color: "#3b82f6" },
-            { name: "Grace Y.", text: "Received my first withdrawal within minutes. BluePay is the best.", color: "#a8891f" },
-            { name: "Michael B.", text: "Started with 10k, now I'm on the Gold plan. Compounding works!", color: "#8b5cf6" },
-            { name: "Fatima H.", text: "Referral bonuses are paid instantly. I've made 50k from referrals alone.", color: "#ec4899" },
-            { name: "John D.", text: "Trustworthy and reliable. Their Paystack integration is seamless.", color: "#10b981" }
-        ];
+        import { registerUser, signInWithGoogle } from './auth.js';
+        import { toast } from './firebase-config.js';
 
-        let index = 0;
-        const container = document.getElementById('testimonial-container');
+        const form = document.getElementById('register-form');
+        const passInput = document.getElementById('reg-password');
+        const strengthBar = document.getElementById('strength-bar');
 
-        function showNext() {
-            const t = testimonials[index];
-            container.innerHTML = `
-                <div class="testimonial">
-                    <div class="avatar" style="background: ${t.color}">${t.name[0]}</div>
-                    <p style="font-size: 20px; font-style: italic; margin-bottom: 15px;">"${t.text}"</p>
-                    <h4 style="color: var(--blue)">${t.name}</h4>
-                </div>
-            `;
-            index = (index + 1) % testimonials.length;
-        }
+        // Password Strength Logic
+        passInput.addEventListener('input', () => {
+            const val = passInput.value;
+            let strength = 0;
+            if (val.length > 6) strength += 25;
+            if (val.match(/[A-Z]/)) strength += 25;
+            if (val.match(/[0-9]/)) strength += 25;
+            if (val.match(/[^A-Za-z0-9]/)) strength += 25;
+            
+            strengthBar.style.width = strength + '%';
+            strengthBar.style.background = strength < 50 ? '#ef4444' : strength < 100 ? '#f0d878' : '#22c55e';
+        });
 
-        showNext();
-        setInterval(showNext, 8000);
+        window.togglePass = (id) => {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        };
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('reg-btn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+            btn.disabled = true;
+
+            const res = await registerUser(
+                document.getElementById('reg-email').value,
+                document.getElementById('reg-password').value,
+                document.getElementById('reg-name').value,
+                document.getElementById('reg-phone').value,
+                document.getElementById('reg-ref').value
+            );
+
+            if (res.success) {
+                window.location.href = 'verify.html';
+            } else {
+                btn.innerHTML = 'Create Account';
+                btn.disabled = false;
+            }
+        };
+
+        document.getElementById('google-btn').onclick = signInWithGoogle;
     </script>
 </body>
 </html>
