@@ -2,55 +2,219 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | ApexVault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>body { background: #080b12; color: #f1f5f9; font-family: 'Inter', sans-serif; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard | BluePay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { 
+            --bg: #06080f; --bg2: #0b0f1a; --bg3: #121726; 
+            --blue: #1d4ed8; --blue2: #3b82f6; --gold: #d4af37; 
+            --text: #f8fafc; --muted: #64748b; --border: rgba(255,255,255,0.06); 
+            --red: #ef4444; --green: #22c55e;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 100px; }
+        
+        /* Header */
+        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(6, 8, 15, 0.9); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid var(--border); }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .avatar { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--blue); object-fit: cover; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+        .greeting h4 { margin: 0; font-size: 12px; color: var(--muted); font-weight: 500; }
+        .greeting h2 { margin: 0; font-size: 16px; font-weight: 700; }
+        .notif-btn { width: 40px; height: 40px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .badge-dot { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background: var(--red); border-radius: 50%; display: none; }
+
+        /* Balance Card */
+        .balance-section { padding: 20px 6%; }
+        .main-card { 
+            background: linear-gradient(135deg, var(--blue), #0a2eb4); padding: 25px; border-radius: 24px; 
+            box-shadow: 0 15px 35px rgba(29, 78, 216, 0.3); position: relative; overflow: hidden;
+        }
+        .main-card::after { content: ""; position: absolute; top: -50px; right: -50px; width: 120px; height: 120px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+        .card-label { font-size: 12px; opacity: 0.8; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .main-balance { font-size: 32px; font-weight: 800; margin: 8px 0 20px; }
+        .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
+        .stat-box h5 { margin: 0 0 4px; font-size: 10px; opacity: 0.7; font-weight: 500; }
+        .stat-box p { margin: 0; font-size: 14px; font-weight: 700; }
+
+        /* Quick Actions */
+        .actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 6% 25px; }
+        .action-item { background: var(--bg2); border: 1px solid var(--border); padding: 12px 5px; border-radius: 16px; text-align: center; color: var(--text); }
+        .action-item i { font-size: 18px; color: var(--blue2); margin-bottom: 8px; display: block; }
+        .action-item span { font-size: 10px; font-weight: 600; }
+
+        /* Section Headings */
+        .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 6% 15px; }
+        .section-header h3 { font-size: 16px; font-weight: 700; margin: 0; }
+        .section-header a { font-size: 12px; color: var(--blue2); font-weight: 600; }
+
+        /* Active Investments Scroll */
+        .inv-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 0 6% 25px; scrollbar-width: none; }
+        .inv-scroll::-webkit-scrollbar { display: none; }
+        .inv-card { min-width: 240px; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 15px; }
+        .inv-name { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+        .inv-progress { height: 6px; background: var(--bg3); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+        .inv-bar { height: 100%; background: var(--gold); border-radius: 10px; }
+        .inv-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+
+        /* Transactions */
+        .tx-list { padding: 0 6%; }
+        .tx-item { background: var(--bg2); border: 1px solid var(--border); padding: 12px; border-radius: 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .tx-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .tx-icon.credit { background: rgba(34, 197, 94, 0.1); color: var(--green); }
+        .tx-icon.debit { background: rgba(239, 68, 68, 0.1); color: var(--red); }
+        .tx-info { flex: 1; }
+        .tx-info h4 { margin: 0; font-size: 14px; font-weight: 600; }
+        .tx-info p { margin: 0; font-size: 11px; color: var(--muted); }
+        .tx-amt { text-align: right; font-size: 14px; font-weight: 700; }
+        .tx-amt.plus { color: var(--green); }
+        .tx-amt.minus { color: var(--red); }
+
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(11, 15, 26, 0.98); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 30px; z-index: 1000; }
+        .nav-link { color: var(--muted); text-align: center; font-size: 10px; font-weight: 600; }
+        .nav-link i { font-size: 20px; display: block; margin-bottom: 4px; }
+        .nav-link.active { color: var(--blue2); }
+    </style>
 </head>
 <body>
-    <div class="max-w-lg mx-auto min-h-screen bg-[#0d1120] pb-24">
-        <!-- Header -->
-        <header class="p-6 flex justify-between items-center bg-[#080b12]/50 backdrop-blur">
-            <div>
-                <p class="text-slate-400 text-xs">Welcome back,</p>
-                <h2 id="userName" class="text-xl font-bold">Loading...</h2>
-            </div>
-            <img id="userAvatar" src="https://ui-avatars.com/api/?background=d4af37&color=000" class="w-10 h-10 rounded-full border-2 border-amber-500">
-        </header>
 
-        <!-- Balance Card -->
-        <div class="px-6 py-8">
-            <div class="bg-gradient-to-br from-amber-500 to-amber-700 p-6 rounded-3xl shadow-xl shadow-amber-500/20 text-black">
-                <p class="text-black/70 text-sm font-medium">Available Balance</p>
-                <h1 id="userBalance" class="text-4xl font-black my-2">₦0.00</h1>
-                <div class="flex gap-4 mt-4">
-                    <a href="deposit.html" class="bg-black text-white px-6 py-2 rounded-xl text-sm font-bold">Deposit</a>
-                    <a href="withdraw.html" class="bg-white/20 px-6 py-2 rounded-xl text-sm font-bold">Withdraw</a>
-                </div>
-            </div>
+<header>
+    <div class="user-info">
+        <div id="avatarBox" class="avatar">..</div>
+        <div class="greeting">
+            <h4>Good Day,</h4>
+            <h2 id="userName">Investor</h2>
         </div>
-
-        <!-- Recent Transactions -->
-        <div class="px-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold">Recent Transactions</h3>
-                <a href="transactions.html" class="text-amber-500 text-xs font-bold">See All</a>
-            </div>
-            <div id="txContainer" class="space-y-4">
-                <!-- Transactions will be injected here via app.js -->
-            </div>
-        </div>
-
-        <!-- Floating Bottom Nav -->
-        <nav class="fixed bottom-0 w-full max-w-lg bg-[#080b12] border-t border-white/10 p-4 grid grid-cols-4 gap-4 text-center">
-            <a href="dashboard.html" class="text-amber-500 text-xs"><i class="fa-solid fa-house block mb-1"></i>Home</a>
-            <a href="invest.html" class="text-slate-500 text-xs"><i class="fa-solid fa-chart-line block mb-1"></i>Invest</a>
-            <a href="referrals.html" class="text-slate-500 text-xs"><i class="fa-solid fa-users block mb-1"></i>Refer</a>
-            <a href="profile.html" class="text-slate-500 text-xs"><i class="fa-solid fa-user block mb-1"></i>Profile</a>
-        </nav>
     </div>
+    <a href="notifications.html" class="notif-btn">
+        <i class="fa-solid fa-bell"></i>
+        <div class="badge-dot" id="notifBadge"></div>
+    </a>
+</header>
 
-    <script type="module" src="app.js"></script>
+<section class="balance-section">
+    <div class="main-card">
+        <div class="card-label">Total Balance</div>
+        <div class="main-balance" id="totalBalance">₦0.00</div>
+        <div class="card-row">
+            <div class="stat-box">
+                <h5>ACTIVE INVESTED</h5>
+                <p id="totalInvested">₦0.00</p>
+            </div>
+            <div class="stat-box">
+                <h5>TOTAL EARNED</h5>
+                <p id="totalEarned" style="color: var(--green);">+₦0.00</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="actions">
+    <a href="deposit.html" class="action-item"><i class="fa-solid fa-wallet"></i><span>Deposit</span></a>
+    <a href="invest.html" class="action-item"><i class="fa-solid fa-chart-line"></i><span>Invest</span></a>
+    <a href="withdraw.html" class="action-item"><i class="fa-solid fa-money-bill-transfer"></i><span>Withdraw</span></a>
+    <a href="buy-code.html" class="action-item"><i class="fa-solid fa-key"></i><span>Buy Code</span></a>
+</section>
+
+<div class="section-header">
+    <h3>Active Investments</h3>
+    <a href="invest.html">View Plans</a>
+</div>
+<div class="inv-scroll" id="activeInvestmentsList">
+    <p style="color: var(--muted); font-size: 13px; padding-left: 5%;">No active investments.</p>
+</div>
+
+<div class="section-header">
+    <h3>Recent Activity</h3>
+    <a href="transactions.html">See All</a>
+</div>
+<div class="tx-list" id="recentTransactionsList">
+    <!-- Transactions Load Here -->
+</div>
+
+<nav class="bottom-nav">
+    <a href="dashboard.html" class="nav-link active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="invest.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i>Invest</a>
+    <a href="transactions.html" class="nav-link"><i class="fa-solid fa-list-ul"></i>History</a>
+    <a href="support.html" class="nav-link"><i class="fa-solid fa-headset"></i>Support</a>
+    <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i>Profile</a>
+</nav>
+
+<script type="module">
+    import { auth, db, doc, onSnapshot, query, collection, where, orderBy, limit, getDocs, formatNaira, timeAgo } from './firebase-config.js';
+
+    auth.onAuthStateChanged(user => {
+        if (!user) return;
+
+        // User Data Sync
+        onSnapshot(doc(db, "users", user.uid), (snap) => {
+            if (snap.exists()) {
+                const data = snap.data();
+                document.getElementById('userName').innerText = data.displayName.split(' ')[0];
+                document.getElementById('totalBalance').innerText = formatNaira(data.balance);
+                document.getElementById('totalInvested').innerText = formatNaira(data.totalInvested || 0);
+                document.getElementById('totalEarned').innerText = "+" + formatNaira(data.totalEarned || 0);
+                
+                const initials = data.displayName.split(' ').map(n => n[0]).join('').toUpperCase();
+                const avatarBox = document.getElementById('avatarBox');
+                if(data.photoBase64) avatarBox.innerHTML = `<img src="${data.photoBase64}" class="avatar" style="border:none">`;
+                else avatarBox.innerText = initials;
+            }
+        });
+
+        // Notifications Badge
+        onSnapshot(query(collection(db, "notifications"), where("uid", "==", user.uid), where("read", "==", false)), snap => {
+            document.getElementById('notifBadge').style.display = snap.empty ? 'none' : 'block';
+        });
+
+        // Active Investments
+        onSnapshot(query(collection(db, "investments"), where("uid", "==", user.uid), where("status", "==", "active")), snap => {
+            const list = document.getElementById('activeInvestmentsList');
+            if (snap.empty) {
+                list.innerHTML = `<p style="color: var(--muted); font-size: 13px; padding-left: 20px;">No active plans.</p>`;
+                return;
+            }
+            list.innerHTML = "";
+            snap.forEach(doc => {
+                const inv = doc.data();
+                const progress = Math.min(100, ((Date.now() - inv.createdAt.toMillis()) / (inv.maturesAt.toMillis() - inv.createdAt.toMillis())) * 100);
+                list.innerHTML += `
+                    <div class="inv-card">
+                        <div class="inv-name">${inv.planName} Plan</div>
+                        <div class="inv-progress"><div class="inv-bar" style="width: ${progress}%"></div></div>
+                        <div class="inv-meta">
+                            <span>Target: ${formatNaira(inv.expectedReturn)}</span>
+                            <span>ROI: ${inv.roiPercent}%</span>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        // Recent Transactions
+        onSnapshot(query(collection(db, "transactions"), where("uid", "==", user.uid), orderBy("createdAt", "desc"), limit(5)), snap => {
+            const list = document.getElementById('recentTransactionsList');
+            list.innerHTML = "";
+            snap.forEach(doc => {
+                const tx = doc.data();
+                const isCredit = ['deposit', 'bonus', 'return', 'referral'].includes(tx.type);
+                list.innerHTML += `
+                    <div class="tx-item">
+                        <div class="tx-icon ${isCredit ? 'credit' : 'debit'}">
+                            <i class="fa-solid fa-${tx.type === 'deposit' ? 'wallet' : tx.type === 'withdraw' ? 'arrow-up-right-from-square' : 'chart-line'}"></i>
+                        </div>
+                        <div class="tx-info">
+                            <h4>${tx.description}</h4>
+                            <p>${timeAgo(tx.createdAt)}</p>
+                        </div>
+                        <div class="tx-amt ${isCredit ? 'plus' : 'minus'}">
+                            ${isCredit ? '+' : '-'}${formatNaira(tx.amount)}
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    });
+</script>
 </body>
 </html>
