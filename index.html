@@ -1,1243 +1,176 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ApexVault | Secure Digital Wealth Management</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BluePay | Invest in Your Future</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #06080f; --bg2: #0b0f1a; --blue: #1d4ed8; --blue2: #3b82f6; 
+            --gold: #d4af37; --text: #eef0f4; --muted: #8896aa;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        /* Navbar */
+        nav {
+            height: 80px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; background: rgba(6, 8, 15, 0.8); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { font-size: 24px; font-weight: 800; color: white; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--blue); }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: white; }
+        .btn-start { background: linear-gradient(135deg, var(--blue), var(--blue2)); color: white !important; padding: 12px 28px; border-radius: 12px; font-weight: 600; }
 
-    :root {
-      --bg:       #080b12;
-      --bg2:      #0d1120;
-      --bg3:      #111827;
-      --gold:     #d4af37;
-      --gold2:    #f0d060;
-      --gold-dim: #aa8c2a;
-      --text:     #f1f5f9;
-      --muted:    #64748b;
-      --border:   rgba(212,175,55,0.12);
-      --card:     rgba(255,255,255,0.035);
-    }
+        /* Hero */
+        .hero { padding: 100px 5% 60px; text-align: center; max-width: 1000px; margin: 0 auto; }
+        .hero h1 { font-size: clamp(40px, 8vw, 72px); font-weight: 800; line-height: 1.1; margin-bottom: 24px; }
+        .hero h1 span { background: linear-gradient(to right, var(--blue2), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--muted); font-size: 18px; margin-bottom: 40px; line-height: 1.6; }
+        
+        .mockup { width: 90%; max-width: 800px; margin: 40px auto; border-radius: 20px; border: 4px solid var(--bg2); box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
 
-    html { scroll-behavior: smooth; }
+        /* Stats */
+        .stats-strip { display: flex; justify-content: space-around; padding: 40px 5%; background: var(--bg2); border-top: 1px solid var(--border); }
+        .stat-item h3 { font-size: 32px; color: var(--gold); }
+        .stat-item p { color: var(--muted); font-size: 14px; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+        /* Features Grid */
+        .section-title { text-align: center; padding: 80px 0 40px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 5% 80px; }
+        .feature-card { background: var(--bg2); padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .feature-card:hover { border-color: var(--blue); transform: translateY(-10px); }
+        .feature-card i { font-size: 32px; color: var(--blue); margin-bottom: 20px; }
 
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 4px; }
+        /* Plans Preview */
+        .plans-preview { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 5% 80px; }
+        .plan-card { background: var(--bg3); padding: 30px; border-radius: 20px; width: 300px; border: 1px solid var(--gold); position: relative; }
+        .plan-card.hot::after { content: 'HOT'; position: absolute; top: 10px; right: 10px; background: var(--red); font-size: 10px; padding: 4px 8px; border-radius: 4px; }
 
-    /* ── Utility ── */
-    .gold { color: var(--gold); }
-    .gold-grad { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%); }
-    .gold-text-grad {
-      background: linear-gradient(135deg, var(--gold2) 0%, var(--gold) 60%, var(--gold-dim) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        /* Testimonials */
+        #testimonial-container { text-align: center; padding: 80px 5%; min-height: 300px; }
+        .testimonial { max-width: 700px; margin: 0 auto; animation: fadeIn 0.8s; }
+        .avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--blue); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }
 
-    /* ── Glow bg blobs ── */
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .blob-gold { background: rgba(212,175,55,0.08); }
-    .blob-blue { background: rgba(59,130,246,0.06); }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-    /* ══════════════════════════════
-       NAVBAR
-    ══════════════════════════════ */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 40px;
-      background: rgba(8,11,18,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      transition: all .3s ease;
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-decoration: none;
-    }
-    .logo span { font-style: italic; }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-
-    .btn-nav {
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color: #000;
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 14px;
-      text-decoration: none;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .btn-nav:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(212,175,55,0.35);
-    }
-
-    /* Hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--gold);
-      border-radius: 2px;
-      transition: all .3s;
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 70px; left: 0; right: 0;
-      background: rgba(8,11,18,0.97);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      padding: 24px;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 99;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 500;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      transition: color .2s;
-    }
-    .mobile-menu a:hover { color: var(--gold); }
-    .mobile-menu .btn-nav { text-align: center; border: none; }
-
-    /* ══════════════════════════════
-       HERO
-    ══════════════════════════════ */
-    #hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 80px;
-      overflow: hidden;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      width: 100%;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(212,175,55,0.1);
-      border: 1px solid rgba(212,175,55,0.25);
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 100px;
-      margin-bottom: 24px;
-    }
-    .hero-badge .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: pulse 2s infinite;
-    }
-
-    .hero-title {
-      font-size: clamp(36px, 5vw, 68px);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -1.5px;
-      margin-bottom: 24px;
-    }
-
-    .hero-desc {
-      color: #94a3b8;
-      font-size: 17px;
-      line-height: 1.75;
-      margin-bottom: 36px;
-      max-width: 480px;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color: #000;
-      padding: 16px 32px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(212,175,55,0.4);
-    }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid rgba(212,175,55,0.4);
-      color: var(--gold);
-      padding: 16px 32px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 15px;
-      text-decoration: none;
-      transition: all .2s;
-      background: transparent;
-    }
-    .btn-outline:hover {
-      background: rgba(212,175,55,0.08);
-      border-color: var(--gold);
-    }
-
-    /* Hero card visual */
-    .hero-visual {
-      position: relative;
-    }
-
-    .hero-card {
-      background: linear-gradient(145deg, rgba(212,175,55,0.12), rgba(13,17,32,0.9));
-      border: 1px solid rgba(212,175,55,0.2);
-      border-radius: 24px;
-      padding: 32px;
-      backdrop-filter: blur(12px);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-card::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: 30px; right: 30px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
-    }
-    .card-top-label { font-size: 12px; color: var(--muted); font-weight: 500; }
-    .card-top-badge {
-      background: rgba(34,197,94,0.15);
-      color: #22c55e;
-      border: 1px solid rgba(34,197,94,0.25);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 100px;
-    }
-
-    .card-balance { font-size: 38px; font-weight: 900; letter-spacing: -1px; margin-bottom: 6px; }
-    .card-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
-
-    .card-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .mini-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 14px;
-    }
-    .mini-card-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
-    .mini-card-val { font-size: 18px; font-weight: 800; }
-    .mini-card-val.green { color: #22c55e; }
-
-    .card-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 20px 0; }
-
-    .tx-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .tx-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      flex-shrink: 0;
-    }
-    .tx-icon.up { background: rgba(34,197,94,0.15); color: #22c55e; }
-    .tx-icon.down { background: rgba(239,68,68,0.15); color: #ef4444; }
-    .tx-icon.gold { background: rgba(212,175,55,0.15); color: var(--gold); }
-    .tx-info { flex: 1; }
-    .tx-name { font-size: 13px; font-weight: 600; }
-    .tx-date { font-size: 11px; color: var(--muted); }
-    .tx-amount { font-size: 14px; font-weight: 700; }
-    .tx-amount.pos { color: #22c55e; }
-    .tx-amount.neg { color: #ef4444; }
-
-    /* Floating badge */
-    .float-badge {
-      position: absolute;
-      background: rgba(13,17,32,0.9);
-      border: 1px solid rgba(212,175,55,0.25);
-      border-radius: 12px;
-      padding: 10px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      backdrop-filter: blur(12px);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      animation: floatUp 3s ease-in-out infinite;
-    }
-    .float-badge-1 { top: -16px; right: -16px; }
-    .float-badge-2 { bottom: 24px; left: -20px; animation-delay: 1.5s; }
-
-    /* ══════════════════════════════
-       STATS BAR
-    ══════════════════════════════ */
-    .stats-bar {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 0;
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-    }
-    .stat-item {
-      text-align: center;
-      padding: 0 20px;
-      border-right: 1px solid var(--border);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-size: 36px;
-      font-weight: 900;
-      letter-spacing: -1px;
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 500; }
-
-    /* ══════════════════════════════
-       HOW IT WORKS
-    ══════════════════════════════ */
-    .section { padding: 100px 0; }
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
-    }
-    .section-title {
-      font-size: clamp(28px, 3.5vw, 48px);
-      font-weight: 900;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 16px;
-    }
-    .section-desc {
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 520px;
-      line-height: 1.7;
-      margin-bottom: 56px;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .step-card {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 20px;
-      padding: 32px;
-      position: relative;
-      transition: border-color .3s, transform .3s;
-    }
-    .step-card:hover {
-      border-color: rgba(212,175,55,0.3);
-      transform: translateY(-4px);
-    }
-    .step-num {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-      opacity: 0.7;
-    }
-    .step-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      background: rgba(212,175,55,0.1);
-      border: 1px solid rgba(212,175,55,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-    .step-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
-
-    /* ══════════════════════════════
-       INVESTMENT PLANS
-    ══════════════════════════════ */
-    .plans-bg { background: var(--bg2); }
-    .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .plan-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
-      padding: 32px;
-      position: relative;
-      transition: all .3s;
-      overflow: hidden;
-    }
-    .plan-card:hover {
-      border-color: rgba(212,175,55,0.35);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-    .plan-card.featured {
-      border-color: rgba(212,175,55,0.4);
-      background: linear-gradient(145deg, rgba(212,175,55,0.08), rgba(13,17,32,0.6));
-    }
-    .plan-card.featured::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: 20%; right: 20%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-    .featured-tag {
-      position: absolute;
-      top: 16px; right: 16px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color: #000;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 100px;
-    }
-    .plan-name { font-size: 14px; font-weight: 600; color: var(--muted); margin-bottom: 12px; }
-    .plan-roi {
-      font-size: 48px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .plan-roi span { font-size: 20px; font-weight: 600; }
-    .plan-period { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
-    .plan-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 20px 0; }
-    .plan-feature {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 10px;
-    }
-    .plan-feature i { color: var(--gold); font-size: 12px; }
-    .plan-btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      margin-top: 24px;
-      padding: 13px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 14px;
-      text-decoration: none;
-      transition: all .2s;
-    }
-    .plan-btn.outline {
-      border: 1px solid rgba(212,175,55,0.35);
-      color: var(--gold);
-    }
-    .plan-btn.outline:hover { background: rgba(212,175,55,0.1); }
-    .plan-btn.solid {
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color: #000;
-    }
-    .plan-btn.solid:hover { box-shadow: 0 8px 24px rgba(212,175,55,0.4); }
-
-    /* ══════════════════════════════
-       FEATURES / WHY US
-    ══════════════════════════════ */
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .feature-card {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 20px;
-      padding: 32px;
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      transition: all .3s;
-    }
-    .feature-card:hover {
-      border-color: rgba(212,175,55,0.25);
-      transform: translateY(-2px);
-    }
-    .feature-icon {
-      width: 50px; height: 50px;
-      min-width: 50px;
-      border-radius: 14px;
-      background: rgba(212,175,55,0.1);
-      border: 1px solid rgba(212,175,55,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      color: var(--gold);
-    }
-    .feature-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-    .feature-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
-
-    /* ══════════════════════════════
-       TESTIMONIALS
-    ══════════════════════════════ */
-    .testimonials-bg { background: var(--bg2); }
-    .testi-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .testi-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
-      padding: 28px;
-      transition: all .3s;
-    }
-    .testi-card:hover {
-      border-color: rgba(212,175,55,0.2);
-      transform: translateY(-3px);
-    }
-    .testi-stars { color: var(--gold); font-size: 13px; margin-bottom: 14px; letter-spacing: 2px; }
-    .testi-text { font-size: 14px; color: #94a3b8; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
-    .testi-author { display: flex; align-items: center; gap: 12px; }
-    .testi-avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800;
-      font-size: 14px;
-      color: #000;
-    }
-    .testi-name { font-size: 14px; font-weight: 700; }
-    .testi-loc { font-size: 12px; color: var(--muted); }
-
-    /* ══════════════════════════════
-       TRUST STRIP
-    ══════════════════════════════ */
-    .trust-strip {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 32px 0;
-    }
-    .trust-inner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
-    }
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .trust-item i { color: var(--gold); font-size: 16px; }
-
-    /* ══════════════════════════════
-       CTA BANNER
-    ══════════════════════════════ */
-    .cta-section { padding: 100px 0; }
-    .cta-box {
-      background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(170,140,42,0.06));
-      border: 1px solid rgba(212,175,55,0.25);
-      border-radius: 28px;
-      padding: 80px 60px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-box::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: 15%; right: 15%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-    .cta-title { font-size: clamp(28px, 4vw, 52px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .cta-desc { font-size: 16px; color: var(--muted); max-width: 500px; margin: 0 auto 36px; line-height: 1.7; }
-    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-    /* ══════════════════════════════
-       FOOTER
-    ══════════════════════════════ */
-    footer {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      padding: 64px 0 32px;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 48px;
-    }
-    .footer-brand p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-top: 12px;
-      max-width: 280px;
-    }
-    .footer-socials { display: flex; gap: 12px; margin-top: 20px; }
-    .social-btn {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted);
-      font-size: 14px;
-      text-decoration: none;
-      transition: all .2s;
-    }
-    .social-btn:hover { background: rgba(212,175,55,0.1); color: var(--gold); border-color: rgba(212,175,55,0.3); }
-    .footer-col-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 16px; letter-spacing: 0.5px; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-bottom {
-      border-top: 1px solid var(--border);
-      padding-top: 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-bottom p { font-size: 13px; color: var(--muted); }
-    .footer-bottom-links { display: flex; gap: 20px; }
-    .footer-bottom-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
-    .footer-bottom-links a:hover { color: var(--gold); }
-
-    /* ══════════════════════════════
-       ANIMATIONS
-    ══════════════════════════════ */
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-    @keyframes floatUp {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .fade-up { animation: fadeInUp .7s ease both; }
-    .fade-in { animation: fadeIn .7s ease both; }
-    .delay-1 { animation-delay: .1s; }
-    .delay-2 { animation-delay: .2s; }
-    .delay-3 { animation-delay: .3s; }
-    .delay-4 { animation-delay: .4s; }
-
-    /* ══════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════ */
-    @media (max-width: 1024px) {
-      nav { padding: 16px 24px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; text-align: center; }
-      .hero-desc { margin: 0 auto 36px; }
-      .hero-btns { justify-content: center; }
-      .hero-visual { max-width: 420px; margin: 0 auto; }
-      .float-badge-2 { left: 0; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .plans-grid { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: 1fr; }
-      .testi-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .stat-item:nth-child(2) { border-right: none; }
-      .stat-item:nth-child(3) { border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
-      .stat-item:nth-child(4) { border-right: none; border-top: 1px solid var(--border); }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .cta-box { padding: 48px 24px; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-    }
-
-    @media (max-width: 640px) {
-      .section { padding: 64px 0; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .trust-inner { gap: 24px; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-    }
-  </style>
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 40px; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ══ NAVBAR ══ -->
-<nav id="navbar">
-  <a href="index.html" class="logo"><span>Apex</span>Vault</a>
-  <ul class="nav-links">
-    <li><a href="investment-plans.html">Plans</a></li>
-    <li><a href="leaderboard.html">Leaderboard</a></li>
-    <li><a href="terms.html">Legal</a></li>
-    <li><a href="login.html" style="color:#f1f5f9">Login</a></li>
-    <li><a href="register.html" class="btn-nav">Get Started</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="investment-plans.html">Investment Plans</a>
-  <a href="leaderboard.html">Leaderboard</a>
-  <a href="terms.html">Terms & Legal</a>
-  <a href="login.html">Login</a>
-  <a href="register.html" class="btn-nav">Create Free Account</a>
-</div>
-
-<!-- ══ HERO ══ -->
-<section id="hero">
-  <!-- bg blobs -->
-  <div class="blob blob-gold" style="width:600px;height:600px;top:-100px;right:-100px;"></div>
-  <div class="blob blob-blue" style="width:500px;height:500px;bottom:-100px;left:-100px;"></div>
-
-  <div class="container">
-    <div class="hero-inner">
-      <!-- LEFT -->
-      <div>
-        <div class="hero-badge fade-up">
-          <span class="dot"></span>
-          Nigeria's #1 Investment Platform
+    <nav>
+        <div class="logo"><i class="fas fa-shield-halved"></i> BLUE<span>PAY</span></div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="investment-plans.html">Plans</a>
+            <a href="login.html">Login</a>
+            <a href="register.html" class="btn-start">Get Started</a>
         </div>
-        <h1 class="hero-title fade-up delay-1">
-          Grow Your <br/>
-          <span class="gold-text-grad">Wealth</span><br/>
-          Smarter.
-        </h1>
-        <p class="hero-desc fade-up delay-2">
-          ApexVault gives you access to high-yield investment plans, instant withdrawals, and a secure vault for your money — built for Nigerians who are serious about financial freedom.
-        </p>
-        <div class="hero-btns fade-up delay-3">
-          <a href="register.html" class="btn-primary">
-            <i class="fa-solid fa-rocket"></i> Start Investing
-          </a>
-          <a href="investment-plans.html" class="btn-outline">
-            <i class="fa-solid fa-chart-line"></i> View Plans
-          </a>
-        </div>
-      </div>
+        <i class="fas fa-bars" style="font-size: 24px; cursor: pointer; display: none;" id="menu-btn"></i>
+    </nav>
 
-      <!-- RIGHT — Dashboard Card Visual -->
-      <div class="hero-visual fade-in delay-2">
-        <div class="float-badge float-badge-1">
-          <i class="fa-solid fa-arrow-trend-up" style="color:#22c55e"></i>
-          <span>+₦42,500 earned today</span>
+    <section class="hero">
+        <h1>Invest in the future of <span>Fintech & Crypto</span></h1>
+        <p>BluePay is Nigeria's most secure investment platform. Start with as little as ₦1,000 and earn up to 120% ROI with daily withdrawals and 24/7 support.</p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <a href="register.html" class="btn-start" style="text-decoration: none;">Create Free Account</a>
+            <a href="investment-plans.html" style="color: white; text-decoration: none; padding: 12px 28px; border: 1px solid var(--muted); border-radius: 12px;">View All Plans</a>
         </div>
+        <img src="https://img.freepik.com/free-vector/gradient-ui-ux-elements-background_23-2149056159.jpg" class="mockup" alt="Dashboard Mockup">
+    </section>
 
-        <div class="hero-card">
-          <div class="card-top">
+    <div class="stats-strip">
+        <div class="stat-item"><h3>50k+</h3><p>Active Users</p></div>
+        <div class="stat-item"><h3>₦2B+</h3><p>Paid Out</p></div>
+        <div class="stat-item"><h3>99.9%</h3><p>Uptime</p></div>
+        <div class="stat-item"><h3>24/7</h3><p>Live Support</p></div>
+    </div>
+
+    <section id="features" class="section-title">
+        <h2>Why Choose BluePay?</h2>
+        <p style="color: var(--muted);">Engineered for transparency, built for wealth.</p>
+    </section>
+
+    <div class="features">
+        <div class="feature-card">
+            <i class="fas fa-bolt"></i>
+            <h3>Instant Credits</h3>
+            <p>Your deposits are credited instantly via Paystack. No manual waiting, no delays.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-lock"></i>
+            <h3>Military-Grade Security</h3>
+            <p>We use SSL encryption and 2FA to ensure your funds and data are always safe.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-coins"></i>
+            <h3>Daily ROI Claims</h3>
+            <p>Don't wait until the end of your plan. Claim your earned profits every single day.</p>
+        </div>
+    </div>
+
+    <div id="testimonial-container">
+        <!-- JS will populate -->
+    </div>
+
+    <footer style="background: var(--bg2); padding: 60px 5% 20px; border-top: 1px solid var(--border);">
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; margin-bottom: 40px;">
+            <div style="max-width: 300px;">
+                <div class="logo" style="margin-bottom: 20px;">BLUE<span>PAY</span></div>
+                <p style="color: var(--muted); font-size: 14px;">The smarter way to grow your wealth in the digital age.</p>
+            </div>
             <div>
-              <div class="card-top-label">Total Portfolio</div>
+                <h4>Company</h4>
+                <a href="terms.html" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Terms</a>
+                <a href="privacy.html" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Privacy</a>
             </div>
-            <div class="card-top-badge">● Active</div>
-          </div>
-          <div class="card-balance gold-text-grad">₦1,250,000</div>
-          <div class="card-sub">Available Balance</div>
-
-          <div class="card-row">
-            <div class="mini-card">
-              <div class="mini-card-label">Total Invested</div>
-              <div class="mini-card-val">₦800k</div>
+            <div>
+                <h4>Support</h4>
+                <a href="support.html" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Live Chat</a>
+                <a href="mailto:admin@bluepay.com" style="display: block; color: var(--muted); margin: 10px 0; text-decoration: none;">Email Us</a>
             </div>
-            <div class="mini-card">
-              <div class="mini-card-label">Total Returns</div>
-              <div class="mini-card-val green">+₦450k</div>
-            </div>
-          </div>
-
-          <hr class="card-divider"/>
-
-          <div class="tx-item">
-            <div class="tx-icon up"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="tx-info">
-              <div class="tx-name">Gold Plan Return</div>
-              <div class="tx-date">Today, 10:24 AM</div>
-            </div>
-            <div class="tx-amount pos">+₦25,000</div>
-          </div>
-          <div class="tx-item">
-            <div class="tx-icon gold"><i class="fa-solid fa-coins"></i></div>
-            <div class="tx-info">
-              <div class="tx-name">Referral Bonus</div>
-              <div class="tx-date">Yesterday, 3:12 PM</div>
-            </div>
-            <div class="tx-amount pos">+₦5,000</div>
-          </div>
-          <div class="tx-item">
-            <div class="tx-icon down"><i class="fa-solid fa-arrow-up"></i></div>
-            <div class="tx-info">
-              <div class="tx-name">Withdrawal</div>
-              <div class="tx-date">Mon, 9:00 AM</div>
-            </div>
-            <div class="tx-amount neg">-₦50,000</div>
-          </div>
         </div>
+        <p style="text-align: center; color: var(--muted); font-size: 12px;">© 2024 BluePay Investment Platform. All rights reserved.</p>
+    </footer>
 
-        <div class="float-badge float-badge-2">
-          <i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i>
-          <span>Funds 100% Secured</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <script type="module">
+        const testimonials = [
+            { name: "Ahmed K.", text: "BluePay changed my perspective on online investments. ₦200k bonus is real!", color: "#1d4ed8" },
+            { name: "Blessing E.", text: "The daily ROI claim feature is what I love most. Very transparent.", color: "#d4af37" },
+            { name: "Chidi O.", text: "Fast withdrawals and great support. Highly recommended.", color: "#22c55e" },
+            { name: "Sarah M.", text: "I've tried many platforms, but BluePay is the most stable so far.", color: "#ef4444" },
+            { name: "David A.", text: "The user interface is so smooth. Even my mom can use it!", color: "#3b82f6" },
+            { name: "Grace Y.", text: "Received my first withdrawal within minutes. BluePay is the best.", color: "#a8891f" },
+            { name: "Michael B.", text: "Started with 10k, now I'm on the Gold plan. Compounding works!", color: "#8b5cf6" },
+            { name: "Fatima H.", text: "Referral bonuses are paid instantly. I've made 50k from referrals alone.", color: "#ec4899" },
+            { name: "John D.", text: "Trustworthy and reliable. Their Paystack integration is seamless.", color: "#10b981" }
+        ];
 
-<!-- ══ STATS BAR ══ -->
-<div class="stats-bar">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-num">50k+</div>
-        <div class="stat-label">Active Investors</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">₦2B+</div>
-        <div class="stat-label">Total Payouts</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">99.9%</div>
-        <div class="stat-label">Uptime</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">24/7</div>
-        <div class="stat-label">Live Support</div>
-      </div>
-    </div>
-  </div>
-</div>
+        let index = 0;
+        const container = document.getElementById('testimonial-container');
 
-<!-- ══ TRUST STRIP ══ -->
-<div class="trust-strip">
-  <div class="container">
-    <div class="trust-inner">
-      <div class="trust-item"><i class="fa-solid fa-lock"></i> Bank-grade Encryption</div>
-      <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> Funds 100% Protected</div>
-      <div class="trust-item"><i class="fa-solid fa-bolt"></i> Instant Withdrawals</div>
-      <div class="trust-item"><i class="fa-solid fa-users"></i> 50,000+ Verified Users</div>
-      <div class="trust-item"><i class="fa-solid fa-certificate"></i> Verified & Licensed</div>
-    </div>
-  </div>
-</div>
+        function showNext() {
+            const t = testimonials[index];
+            container.innerHTML = `
+                <div class="testimonial">
+                    <div class="avatar" style="background: ${t.color}">${t.name[0]}</div>
+                    <p style="font-size: 20px; font-style: italic; margin-bottom: 15px;">"${t.text}"</p>
+                    <h4 style="color: var(--blue)">${t.name}</h4>
+                </div>
+            `;
+            index = (index + 1) % testimonials.length;
+        }
 
-<!-- ══ HOW IT WORKS ══ -->
-<section class="section">
-  <div class="container">
-    <div class="section-label">How It Works</div>
-    <h2 class="section-title">Three steps to your <br/><span class="gold-text-grad">first return</span></h2>
-    <p class="section-desc">Getting started on ApexVault takes less than 3 minutes. No paperwork, no long waiting — just your money growing.</p>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">STEP 01</div>
-        <div class="step-icon"><i class="fa-solid fa-user-plus"></i></div>
-        <div class="step-title">Create Your Account</div>
-        <div class="step-desc">Sign up with your email or Google account in under a minute. Verify your identity and you're in.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">STEP 02</div>
-        <div class="step-icon"><i class="fa-solid fa-wallet"></i></div>
-        <div class="step-title">Fund Your Wallet</div>
-        <div class="step-desc">Deposit into your ApexVault wallet using your preferred payment method. Instant confirmation.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">STEP 03</div>
-        <div class="step-icon"><i class="fa-solid fa-chart-pie"></i></div>
-        <div class="step-title">Choose a Plan & Earn</div>
-        <div class="step-desc">Pick from our 10+ investment packages and watch your returns grow. Withdraw anytime you want.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ INVESTMENT PLANS ══ -->
-<section class="section plans-bg">
-  <div class="container">
-    <div class="section-label">Investment Plans</div>
-    <h2 class="section-title">Plans built for <br/><span class="gold-text-grad">every budget</span></h2>
-    <p class="section-desc">From starter to VIP — pick the package that matches your goals and risk appetite.</p>
-    <div class="plans-grid">
-      <div class="plan-card">
-        <div class="plan-name">Starter Plan</div>
-        <div class="plan-roi gold-text-grad">15<span>%</span></div>
-        <div class="plan-period">ROI in 7 days</div>
-        <hr class="plan-divider"/>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Min. deposit ₦5,000</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Weekly returns</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Instant withdrawal</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> 24/7 support</div>
-        <a href="register.html" class="plan-btn outline">Get Started</a>
-      </div>
-
-      <div class="plan-card featured">
-        <div class="featured-tag">Most Popular</div>
-        <div class="plan-name">Gold Plan</div>
-        <div class="plan-roi gold-text-grad">35<span>%</span></div>
-        <div class="plan-period">ROI in 14 days</div>
-        <hr class="plan-divider"/>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Min. deposit ₦50,000</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Bi-weekly returns</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Priority withdrawal</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Referral bonuses</div>
-        <a href="register.html" class="plan-btn solid">Start Now</a>
-      </div>
-
-      <div class="plan-card">
-        <div class="plan-name">Platinum Plan</div>
-        <div class="plan-roi gold-text-grad">60<span>%</span></div>
-        <div class="plan-period">ROI in 30 days</div>
-        <hr class="plan-divider"/>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Min. deposit ₦200,000</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Monthly returns</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> VIP withdrawal</div>
-        <div class="plan-feature"><i class="fa-solid fa-check"></i> Dedicated manager</div>
-        <a href="register.html" class="plan-btn outline">Get Started</a>
-      </div>
-    </div>
-
-    <div style="text-align:center;margin-top:36px;">
-      <a href="investment-plans.html" class="btn-outline" style="display:inline-flex;">
-        View All 10+ Plans <i class="fa-solid fa-arrow-right" style="margin-left:8px"></i>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FEATURES ══ -->
-<section class="section">
-  <div class="container">
-    <div class="section-label">Why ApexVault</div>
-    <h2 class="section-title">Built for your <br/><span class="gold-text-grad">peace of mind</span></h2>
-    <p class="section-desc">Every feature is designed to keep your money safe and your earnings growing.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-        <div>
-          <div class="feature-title">Military-Grade Security</div>
-          <div class="feature-desc">Your funds and data are protected with 256-bit encryption. We use the same technology banks use to keep your money safe.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
-        <div>
-          <div class="feature-title">Instant Withdrawals</div>
-          <div class="feature-desc">Request your funds anytime and receive them fast. No unnecessary delays, no hidden charges on your returns.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-        <div>
-          <div class="feature-title">Referral Programme</div>
-          <div class="feature-desc">Invite friends and earn a bonus on every investment they make. The more you refer, the more passive income you earn.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
-        <div>
-          <div class="feature-title">24/7 Live Support</div>
-          <div class="feature-desc">Our agents are always online. Chat with support directly inside the app — no email tickets, no waiting days for a reply.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-chart-bar"></i></div>
-        <div>
-          <div class="feature-title">Real-Time Dashboard</div>
-          <div class="feature-desc">Track every transaction, investment return, and referral bonus from one clean dashboard. Full transparency, always.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div>
-        <div>
-          <div class="feature-title">100% Mobile-Friendly</div>
-          <div class="feature-desc">Manage your entire portfolio from your phone. ApexVault works perfectly on any device — phone, tablet, or desktop.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ TESTIMONIALS ══ -->
-<section class="section testimonials-bg">
-  <div class="container">
-    <div class="section-label">Testimonials</div>
-    <h2 class="section-title">What our <span class="gold-text-grad">investors</span> say</h2>
-    <p class="section-desc" style="margin-bottom:48px;">Real people. Real returns. See what Nigerians are saying about ApexVault.</p>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-text">"I started with ₦20,000 on the Starter plan and within a week I had my returns. ApexVault is the real deal. No stress, no delay."</div>
-        <div class="testi-author">
-          <div class="testi-avatar">AO</div>
-          <div>
-            <div class="testi-name">Adaeze Okonkwo</div>
-            <div class="testi-loc">Lagos, Nigeria</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-text">"The Gold Plan is doing wonders for me. I've referred 6 friends already and the referral bonuses alone are worth it. Highly recommended!"</div>
-        <div class="testi-author">
-          <div class="testi-avatar">KM</div>
-          <div>
-            <div class="testi-name">Kabiru Musa</div>
-            <div class="testi-loc">Abuja, Nigeria</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-text">"Customer support is top-tier. I had a question at 2am and someone replied within minutes. That kind of service builds real trust."</div>
-        <div class="testi-author">
-          <div class="testi-avatar">FE</div>
-          <div>
-            <div class="testi-name">Funmi Eze</div>
-            <div class="testi-loc">Port Harcourt, Nigeria</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ CTA BANNER ══ -->
-<section class="cta-section">
-  <div class="container">
-    <div class="cta-box">
-      <div class="blob blob-gold" style="width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.5;"></div>
-      <div style="position:relative;z-index:1;">
-        <div class="section-label" style="text-align:center;">Limited Spots Available</div>
-        <h2 class="cta-title">Ready to start <span class="gold-text-grad">earning?</span></h2>
-        <p class="cta-desc">Join 50,000+ Nigerians already growing their wealth on ApexVault. Create your free account in under 60 seconds.</p>
-        <div class="cta-btns">
-          <a href="register.html" class="btn-primary">
-            <i class="fa-solid fa-rocket"></i> Create Free Account
-          </a>
-          <a href="login.html" class="btn-outline">
-            <i class="fa-solid fa-right-to-bracket"></i> Login
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FOOTER ══ -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="logo"><span>Apex</span>Vault</a>
-        <p>Nigeria's most trusted digital investment platform. Secure, transparent, and built for your financial freedom.</p>
-        <div class="footer-socials">
-          <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-telegram"></i></a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Platform</div>
-        <ul class="footer-links">
-          <li><a href="investment-plans.html">Investment Plans</a></li>
-          <li><a href="leaderboard.html">Leaderboard</a></li>
-          <li><a href="register.html">Create Account</a></li>
-          <li><a href="login.html">Login</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Account</div>
-        <ul class="footer-links">
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="deposit.html">Deposit</a></li>
-          <li><a href="invest.html">Invest</a></li>
-          <li><a href="withdraw.html">Withdraw</a></li>
-          <li><a href="referrals.html">Referrals</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Legal & Support</div>
-        <ul class="footer-links">
-          <li><a href="terms.html">Terms & Conditions</a></li>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="support.html">Support Chat</a></li>
-          <li><a href="kyc.html">KYC Verification</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 ApexVault Investment Ltd. All rights reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="terms.html">Terms</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="support.html">Support</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-  // Hamburger menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
-
-  // Navbar shrink on scroll
-  window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    if (window.scrollY > 40) {
-      nav.style.padding = '12px 40px';
-      nav.style.background = 'rgba(8,11,18,0.97)';
-    } else {
-      nav.style.padding = '18px 40px';
-      nav.style.background = 'rgba(8,11,18,0.85)';
-    }
-  });
-
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.step-card, .plan-card, .feature-card, .testi-card, .stat-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity .6s ease, transform .6s ease';
-    observer.observe(el);
-  });
-</script>
+        showNext();
+        setInterval(showNext, 8000);
+    </script>
 </body>
 </html>
