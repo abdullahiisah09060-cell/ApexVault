@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to BluePay!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --bg: #06080f; --blue: #1d4ed8; --gold: #d4af37; --text: #f8fafc; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+        .welcome-card { padding: 40px 6%; max-width: 500px; }
+        h1 { font-size: 36px; font-weight: 900; margin-bottom: 10px; }
+        p { color: #94a3b8; font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
+        .bonus-box { background: linear-gradient(135deg, var(--gold), #fcd34d); color: #000; padding: 20px 40px; border-radius: 20px; display: inline-block; font-size: 28px; font-weight: 900; margin-bottom: 40px; box-shadow: 0 15px 35px rgba(212,175,55,0.3); }
+        .dash-btn { background: var(--blue); color: #fff; padding: 18px 40px; border-radius: 12px; font-weight: 700; font-size: 16px; display: inline-block; text-decoration: none; transition: 0.3s; }
+        .dash-btn:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(29, 78, 216, 0.4); }
+    </style>
+</head>
+<body>
+
+<div class="welcome-card">
+    <h1>Account Verified!</h1>
+    <p>Welcome to the family. To get you started on your investment journey, we've credited your account with a special bonus.</p>
+    
+    <div class="bonus-box">₦200,000.00</div>
+    
+    <p style="margin-bottom: 20px;">You can use this bonus to purchase your first investment plan right away.</p>
+    <a href="dashboard.html" class="dash-btn">Enter Dashboard <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i></a>
+</div>
+
+<script>
+    // Launch Confetti immediately
+    const duration = 5 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#1d4ed8', '#d4af37'] });
+        confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#1d4ed8', '#d4af37'] });
+        if (Date.now() < end) requestAnimationFrame(frame);
+    }());
+</script>
+</body>
+</html>
